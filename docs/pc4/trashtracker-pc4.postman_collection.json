@@ -1,9 +1,14 @@
 {
   "info": {
     "name": "TrashTracker PC4 - Application Tier",
+    "description": "Coleccion organizada por recurso para evidenciar todos los endpoints REST de la capa de aplicacion PC4.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
+    {
+      "key": "serverUrl",
+      "value": "http://localhost:3000"
+    },
     {
       "key": "baseUrl",
       "value": "http://localhost:3000/api/v1"
@@ -11,6 +16,10 @@
     {
       "key": "usuarioId",
       "value": "665000000000000000000001"
+    },
+    {
+      "key": "usuarioSecundarioId",
+      "value": "665000000000000000000004"
     },
     {
       "key": "liderId",
@@ -35,184 +44,995 @@
     {
       "key": "recompensaId",
       "value": "665000000000000000000501"
+    },
+    {
+      "key": "canjeId",
+      "value": "665000000000000000000601"
+    },
+    {
+      "key": "mensajeId",
+      "value": "665000000000000000000701"
+    },
+    {
+      "key": "notificacionId",
+      "value": "665000000000000000000901"
+    },
+    {
+      "key": "usuarioCreadoId",
+      "value": ""
+    },
+    {
+      "key": "reporteCreadoId",
+      "value": ""
+    },
+    {
+      "key": "comunidadCreadaId",
+      "value": ""
+    },
+    {
+      "key": "eventoCreadoId",
+      "value": ""
+    },
+    {
+      "key": "comercioCreadoId",
+      "value": ""
+    },
+    {
+      "key": "recompensaCreadaId",
+      "value": ""
+    },
+    {
+      "key": "canjeCreadoId",
+      "value": ""
+    },
+    {
+      "key": "mensajeCreadoId",
+      "value": ""
+    },
+    {
+      "key": "notificacionCreadaId",
+      "value": ""
     }
   ],
   "item": [
     {
-      "name": "Health",
-      "request": {
-        "method": "GET",
-        "url": "http://localhost:3000/api/health"
-      }
-    },
-    {
-      "name": "Dashboard resumen",
-      "request": {
-        "method": "GET",
-        "url": "{{baseUrl}}/dashboard/resumen"
-      }
-    },
-    {
-      "name": "Usuarios - listar",
-      "request": {
-        "method": "GET",
-        "url": "{{baseUrl}}/usuarios"
-      }
-    },
-    {
-      "name": "Usuarios - crear",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"nombre\": \"Lucia Verde\",\n  \"correo\": \"lucia.verde@trashtracker.pe\",\n  \"distrito\": \"Comas\",\n  \"rol\": \"ciudadano\",\n  \"perfil\": {\n    \"biografia\": \"Voluntaria ambiental\",\n    \"intereses\": [\"reciclaje\", \"mapas\"]\n  }\n}"
-        },
-        "url": "{{baseUrl}}/usuarios"
-      }
-    },
-    {
-      "name": "Reportes - listar",
-      "request": {
-        "method": "GET",
-        "url": "{{baseUrl}}/reportes"
-      }
-    },
-    {
-      "name": "Reportes - crear",
-      "event": [
+      "name": "00 Sistema",
+      "item": [
         {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "const body = pm.response.json();",
-              "if (body.data && body.data._id) pm.collectionVariables.set('reporteCreadoId', body.data._id);"
-            ]
+          "name": "GET API root",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{serverUrl}}/"
+          }
+        },
+        {
+          "name": "GET Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{serverUrl}}/api/health"
           }
         }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"usuarioId\": \"{{usuarioId}}\",\n  \"titulo\": \"Basura acumulada junto a colegio\",\n  \"descripcion\": \"Se observa acumulacion de bolsas y residuos mixtos cerca al ingreso principal.\",\n  \"distrito\": \"Comas\",\n  \"tipoResiduo\": \"mixto\",\n  \"ubicacion\": {\n    \"coordinates\": [-77.052, -11.948],\n    \"direccion\": \"Av. Tupac Amaru, Comas\"\n  },\n  \"multimedia\": [\n    {\n      \"tipo\": \"foto\",\n      \"url\": \"https://cdn.trashtracker.pe/reportes/colegio-1.jpg\",\n      \"descripcion\": \"Evidencia del punto critico\"\n    }\n  ]\n}"
-        },
-        "url": "{{baseUrl}}/reportes"
-      }
+      ]
     },
     {
-      "name": "Reportes - agregar comentario",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "01 Dashboard",
+      "item": [
+        {
+          "name": "GET Resumen",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/dashboard/resumen"
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"usuarioId\": \"665000000000000000000002\",\n  \"contenido\": \"Confirmo que el punto sigue activo.\"\n}"
-        },
-        "url": "{{baseUrl}}/reportes/{{reporteId}}/comentarios"
-      }
+        }
+      ]
     },
     {
-      "name": "Reportes - validar",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "02 Usuarios",
+      "item": [
+        {
+          "name": "GET Listar usuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/usuarios?page=1&limit=20"
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"usuarioId\": \"665000000000000000000004\",\n  \"tipo\": \"confirma\"\n}"
         },
-        "url": "{{baseUrl}}/reportes/{{reporteId}}/validaciones"
-      }
+        {
+          "name": "POST Crear usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Lucia Verde\",\n  \"correo\": \"lucia.verde+{{$timestamp}}@trashtracker.pe\",\n  \"distrito\": \"Comas\",\n  \"rol\": \"ciudadano\",\n  \"perfil\": {\n    \"biografia\": \"Voluntaria ambiental\",\n    \"intereses\": [\n      \"reciclaje\",\n      \"mapas\"\n    ]\n  },\n  \"preferencias\": {\n    \"idioma\": \"es\",\n    \"notificaciones\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/usuarios"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data._id) pm.collectionVariables.set(\"usuarioCreadoId\", body.data._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Obtener usuario por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
+          }
+        },
+        {
+          "name": "PATCH Actualizar usuario",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"distrito\": \"Comas\",\n  \"perfil\": {\n    \"biografia\": \"Perfil actualizado desde Postman\",\n    \"intereses\": [\n      \"reciclaje\",\n      \"voluntariado\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/usuarios/{{usuarioId}}"
+          }
+        },
+        {
+          "name": "DELETE Eliminar usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/usuarios/{{usuarioCreadoId}}"
+          }
+        }
+      ]
     },
     {
-      "name": "Reportes - actualizar estado",
-      "request": {
-        "method": "PATCH",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "03 Reportes",
+      "item": [
+        {
+          "name": "GET Listar reportes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/reportes?page=1&limit=20&distrito=Comas"
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"estado\": \"en_proceso\"\n}"
         },
-        "url": "{{baseUrl}}/reportes/{{reporteId}}"
-      }
+        {
+          "name": "POST Crear reporte",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"{{usuarioId}}\",\n  \"titulo\": \"Basura acumulada junto a colegio\",\n  \"descripcion\": \"Se observa acumulacion de bolsas y residuos mixtos cerca al ingreso principal.\",\n  \"distrito\": \"Comas\",\n  \"tipoResiduo\": \"mixto\",\n  \"ubicacion\": {\n    \"coordinates\": [\n      -77.052,\n      -11.948\n    ],\n    \"direccion\": \"Av. Tupac Amaru, Comas\"\n  },\n  \"multimedia\": [\n    {\n      \"tipo\": \"foto\",\n      \"url\": \"https://cdn.trashtracker.pe/reportes/colegio-1.jpg\",\n      \"descripcion\": \"Evidencia del punto critico\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/reportes"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data._id) pm.collectionVariables.set(\"reporteCreadoId\", body.data._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Obtener reporte por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/reportes/{{reporteId}}"
+          }
+        },
+        {
+          "name": "PATCH Actualizar reporte",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"en_proceso\",\n  \"prioridad\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/reportes/{{reporteId}}"
+          }
+        },
+        {
+          "name": "DELETE Eliminar reporte",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/reportes/{{reporteCreadoId}}"
+          }
+        },
+        {
+          "name": "POST Agregar comentario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"{{usuarioSecundarioId}}\",\n  \"contenido\": \"Confirmo que el punto sigue activo.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/reportes/{{reporteId}}/comentarios"
+          }
+        },
+        {
+          "name": "POST Validar reporte",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"{{usuarioSecundarioId}}\",\n  \"tipo\": \"confirma\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/reportes/{{reporteId}}/validaciones"
+          }
+        },
+        {
+          "name": "POST Agregar reaccion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"{{usuarioSecundarioId}}\",\n  \"tipo\": \"importante\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/reportes/{{reporteId}}/reacciones"
+          }
+        }
+      ]
     },
     {
-      "name": "Comunidades - agregar miembro",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "04 Comunidades",
+      "item": [
+        {
+          "name": "GET Listar comunidades",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/comunidades?page=1&limit=20"
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"usuarioId\": \"665000000000000000000004\",\n  \"rolComunidad\": \"miembro\"\n}"
         },
-        "url": "{{baseUrl}}/comunidades/{{comunidadId}}/miembros"
-      }
+        {
+          "name": "POST Crear comunidad",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Guardianes PC4 {{$timestamp}}\",\n  \"distrito\": \"Comas\",\n  \"descripcion\": \"Comunidad creada desde Postman para validar la capa de aplicacion.\",\n  \"liderId\": \"{{liderId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/comunidades"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data._id) pm.collectionVariables.set(\"comunidadCreadaId\", body.data._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Obtener comunidad por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/comunidades/{{comunidadId}}"
+          }
+        },
+        {
+          "name": "PATCH Actualizar comunidad",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descripcion\": \"Descripcion actualizada desde Postman\",\n  \"estado\": \"activa\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/comunidades/{{comunidadId}}"
+          }
+        },
+        {
+          "name": "DELETE Eliminar comunidad",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/comunidades/{{comunidadCreadaId}}"
+          }
+        },
+        {
+          "name": "POST Agregar miembro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"{{usuarioSecundarioId}}\",\n  \"rolComunidad\": \"miembro\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/comunidades/{{comunidadId}}/miembros"
+          }
+        }
+      ]
     },
     {
-      "name": "Eventos - crear",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "05 Eventos de limpieza",
+      "item": [
+        {
+          "name": "GET Listar eventos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/eventos-limpieza?page=1&limit=20"
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"titulo\": \"Limpieza comunitaria PC4\",\n  \"comunidadId\": \"{{comunidadId}}\",\n  \"organizadorId\": \"{{liderId}}\",\n  \"reporteId\": \"{{reporteId}}\",\n  \"descripcion\": \"Evento creado desde API REST para evidenciar la capa de aplicacion.\",\n  \"fechaEvento\": \"2026-07-20T15:00:00Z\",\n  \"ubicacion\": {\n    \"coordinates\": [-77.047, -11.944],\n    \"direccion\": \"Parque central, Comas\"\n  }\n}"
         },
-        "url": "{{baseUrl}}/eventos-limpieza"
-      }
+        {
+          "name": "POST Crear evento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Limpieza comunitaria PC4\",\n  \"comunidadId\": \"{{comunidadId}}\",\n  \"organizadorId\": \"{{liderId}}\",\n  \"reporteId\": \"{{reporteId}}\",\n  \"descripcion\": \"Evento creado desde API REST para evidenciar la capa de aplicacion.\",\n  \"fechaEvento\": \"2026-07-20T15:00:00Z\",\n  \"ubicacion\": {\n    \"coordinates\": [\n      -77.047,\n      -11.944\n    ],\n    \"direccion\": \"Parque central, Comas\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/eventos-limpieza"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data._id) pm.collectionVariables.set(\"eventoCreadoId\", body.data._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Obtener evento por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/eventos-limpieza/{{eventoId}}"
+          }
+        },
+        {
+          "name": "PATCH Actualizar evento",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"programado\",\n  \"descripcion\": \"Evento actualizado desde Postman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/eventos-limpieza/{{eventoId}}"
+          }
+        },
+        {
+          "name": "DELETE Eliminar evento",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/eventos-limpieza/{{eventoCreadoId}}"
+          }
+        },
+        {
+          "name": "POST Agregar asistente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"{{usuarioSecundarioId}}\",\n  \"estadoAsistencia\": \"confirmado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/eventos-limpieza/{{eventoId}}/asistentes"
+          }
+        },
+        {
+          "name": "POST Agregar evidencia",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"foto\",\n  \"url\": \"https://cdn.trashtracker.pe/eventos/evidencia-pc4.jpg\",\n  \"descripcion\": \"Evidencia de limpieza\",\n  \"usuarioId\": \"{{usuarioId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/eventos-limpieza/{{eventoId}}/evidencias"
+          }
+        }
+      ]
     },
     {
-      "name": "Canjes - crear",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
+      "name": "06 Comercios",
+      "item": [
+        {
+          "name": "GET Listar comercios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/comercios?page=1&limit=20"
           }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"usuarioId\": \"{{usuarioId}}\",\n  \"recompensaId\": \"{{recompensaId}}\"\n}"
         },
-        "url": "{{baseUrl}}/canjes"
-      }
+        {
+          "name": "POST Crear comercio",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"EcoMarket PC4 {{$timestamp}}\",\n  \"rubro\": \"Tienda sostenible\",\n  \"direccion\": \"Av. Universitaria 123\",\n  \"distrito\": \"Comas\",\n  \"contacto\": \"contacto@ecomarket.pe\",\n  \"estado\": \"activo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/comercios"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data._id) pm.collectionVariables.set(\"comercioCreadoId\", body.data._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Obtener comercio por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/comercios/{{comercioId}}"
+          }
+        },
+        {
+          "name": "PATCH Actualizar comercio",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contacto\": \"alianzas@ecomarket.pe\",\n  \"estado\": \"activo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/comercios/{{comercioId}}"
+          }
+        },
+        {
+          "name": "DELETE Eliminar comercio",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/comercios/{{comercioCreadoId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 Recompensas",
+      "item": [
+        {
+          "name": "GET Listar recompensas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/recompensas?page=1&limit=20"
+          }
+        },
+        {
+          "name": "POST Crear recompensa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comercioId\": \"{{comercioId}}\",\n  \"nombre\": \"Descuento PC4 {{$timestamp}}\",\n  \"descripcion\": \"Beneficio creado para validar recompensas desde Postman.\",\n  \"puntosRequeridos\": 50,\n  \"stock\": 10,\n  \"estado\": \"disponible\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/recompensas"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data._id) pm.collectionVariables.set(\"recompensaCreadaId\", body.data._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Obtener recompensa por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/recompensas/{{recompensaId}}"
+          }
+        },
+        {
+          "name": "PATCH Actualizar recompensa",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stock\": 8,\n  \"estado\": \"disponible\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/recompensas/{{recompensaId}}"
+          }
+        },
+        {
+          "name": "DELETE Eliminar recompensa",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/recompensas/{{recompensaCreadaId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 Canjes",
+      "item": [
+        {
+          "name": "GET Listar canjes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/canjes?page=1&limit=20"
+          }
+        },
+        {
+          "name": "POST Crear canje",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"{{usuarioId}}\",\n  \"recompensaId\": \"{{recompensaId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/canjes"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data._id) pm.collectionVariables.set(\"canjeCreadoId\", body.data._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Obtener canje por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/canjes/{{canjeId}}"
+          }
+        },
+        {
+          "name": "PATCH Actualizar canje",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"usado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/canjes/{{canjeId}}"
+          }
+        },
+        {
+          "name": "DELETE Eliminar canje",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/canjes/{{canjeCreadoId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 Mensajes comunidad",
+      "item": [
+        {
+          "name": "GET Listar mensajes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/mensajes-comunidad?page=1&limit=20&comunidadId={{comunidadId}}"
+          }
+        },
+        {
+          "name": "POST Crear mensaje",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comunidadId\": \"{{comunidadId}}\",\n  \"usuarioId\": \"{{usuarioId}}\",\n  \"contenido\": \"Mensaje creado desde Postman para validar el flujo comunitario.\",\n  \"tipoMensaje\": \"texto\",\n  \"multimedia\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/mensajes-comunidad"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data._id) pm.collectionVariables.set(\"mensajeCreadoId\", body.data._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Obtener mensaje por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/mensajes-comunidad/{{mensajeId}}"
+          }
+        },
+        {
+          "name": "PATCH Actualizar mensaje",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contenido\": \"Mensaje actualizado desde Postman\",\n  \"estado\": \"visible\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/mensajes-comunidad/{{mensajeId}}"
+          }
+        },
+        {
+          "name": "DELETE Eliminar mensaje",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/mensajes-comunidad/{{mensajeCreadoId}}"
+          }
+        },
+        {
+          "name": "POST Agregar reaccion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"{{usuarioSecundarioId}}\",\n  \"tipo\": \"apoyo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/mensajes-comunidad/{{mensajeId}}/reacciones"
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 Notificaciones",
+      "item": [
+        {
+          "name": "GET Listar notificaciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/notificaciones?page=1&limit=20&usuarioId={{usuarioId}}"
+          }
+        },
+        {
+          "name": "POST Crear notificacion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": \"{{usuarioId}}\",\n  \"tipo\": \"reporte\",\n  \"titulo\": \"Reporte actualizado\",\n  \"mensaje\": \"Tu reporte recibio una nueva validacion.\",\n  \"referenciaId\": \"{{reporteId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{baseUrl}}/notificaciones"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "if (body.data && body.data._id) pm.collectionVariables.set(\"notificacionCreadaId\", body.data._id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Obtener notificacion por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/notificaciones/{{notificacionId}}"
+          }
+        },
+        {
+          "name": "PATCH Marcar como leida",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/notificaciones/{{notificacionId}}/leida"
+          }
+        },
+        {
+          "name": "DELETE Eliminar notificacion",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/notificaciones/{{notificacionCreadaId}}"
+          }
+        }
+      ]
     }
   ]
 }

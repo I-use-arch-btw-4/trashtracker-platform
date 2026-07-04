@@ -92,8 +92,15 @@ PATCH  /api/v1/notificaciones/:id/leida
 ## Evidencia para PC4
 
 La carpeta `docs/pc4` incluye una coleccion de Postman con operaciones CRUD
-basicas. Las operaciones `POST`, `PATCH` y `DELETE` modifican MongoDB y sirven
-como evidencia de interaccion entre la capa de aplicacion y la capa de datos.
+organizadas por recurso. Las operaciones `POST`, `PATCH` y `DELETE` modifican
+MongoDB y sirven como evidencia de interaccion entre la capa de aplicacion y la
+capa de datos.
+
+Para regenerar la coleccion desde la definicion versionada:
+
+```bash
+npm run postman:generate
+```
 
 ## Validacion
 
