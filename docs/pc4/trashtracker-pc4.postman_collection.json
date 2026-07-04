@@ -1,0 +1,218 @@
+{
+  "info": {
+    "name": "TrashTracker PC4 - Application Tier",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v1"
+    },
+    {
+      "key": "usuarioId",
+      "value": "665000000000000000000001"
+    },
+    {
+      "key": "liderId",
+      "value": "665000000000000000000003"
+    },
+    {
+      "key": "reporteId",
+      "value": "665000000000000000000101"
+    },
+    {
+      "key": "comunidadId",
+      "value": "665000000000000000000201"
+    },
+    {
+      "key": "eventoId",
+      "value": "665000000000000000000301"
+    },
+    {
+      "key": "comercioId",
+      "value": "665000000000000000000401"
+    },
+    {
+      "key": "recompensaId",
+      "value": "665000000000000000000501"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:3000/api/health"
+      }
+    },
+    {
+      "name": "Dashboard resumen",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/dashboard/resumen"
+      }
+    },
+    {
+      "name": "Usuarios - listar",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/usuarios"
+      }
+    },
+    {
+      "name": "Usuarios - crear",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Lucia Verde\",\n  \"correo\": \"lucia.verde@trashtracker.pe\",\n  \"distrito\": \"Comas\",\n  \"rol\": \"ciudadano\",\n  \"perfil\": {\n    \"biografia\": \"Voluntaria ambiental\",\n    \"intereses\": [\"reciclaje\", \"mapas\"]\n  }\n}"
+        },
+        "url": "{{baseUrl}}/usuarios"
+      }
+    },
+    {
+      "name": "Reportes - listar",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/reportes"
+      }
+    },
+    {
+      "name": "Reportes - crear",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "if (body.data && body.data._id) pm.collectionVariables.set('reporteCreadoId', body.data._id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": \"{{usuarioId}}\",\n  \"titulo\": \"Basura acumulada junto a colegio\",\n  \"descripcion\": \"Se observa acumulacion de bolsas y residuos mixtos cerca al ingreso principal.\",\n  \"distrito\": \"Comas\",\n  \"tipoResiduo\": \"mixto\",\n  \"ubicacion\": {\n    \"coordinates\": [-77.052, -11.948],\n    \"direccion\": \"Av. Tupac Amaru, Comas\"\n  },\n  \"multimedia\": [\n    {\n      \"tipo\": \"foto\",\n      \"url\": \"https://cdn.trashtracker.pe/reportes/colegio-1.jpg\",\n      \"descripcion\": \"Evidencia del punto critico\"\n    }\n  ]\n}"
+        },
+        "url": "{{baseUrl}}/reportes"
+      }
+    },
+    {
+      "name": "Reportes - agregar comentario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": \"665000000000000000000002\",\n  \"contenido\": \"Confirmo que el punto sigue activo.\"\n}"
+        },
+        "url": "{{baseUrl}}/reportes/{{reporteId}}/comentarios"
+      }
+    },
+    {
+      "name": "Reportes - validar",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": \"665000000000000000000004\",\n  \"tipo\": \"confirma\"\n}"
+        },
+        "url": "{{baseUrl}}/reportes/{{reporteId}}/validaciones"
+      }
+    },
+    {
+      "name": "Reportes - actualizar estado",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"estado\": \"en_proceso\"\n}"
+        },
+        "url": "{{baseUrl}}/reportes/{{reporteId}}"
+      }
+    },
+    {
+      "name": "Comunidades - agregar miembro",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": \"665000000000000000000004\",\n  \"rolComunidad\": \"miembro\"\n}"
+        },
+        "url": "{{baseUrl}}/comunidades/{{comunidadId}}/miembros"
+      }
+    },
+    {
+      "name": "Eventos - crear",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Limpieza comunitaria PC4\",\n  \"comunidadId\": \"{{comunidadId}}\",\n  \"organizadorId\": \"{{liderId}}\",\n  \"reporteId\": \"{{reporteId}}\",\n  \"descripcion\": \"Evento creado desde API REST para evidenciar la capa de aplicacion.\",\n  \"fechaEvento\": \"2026-07-20T15:00:00Z\",\n  \"ubicacion\": {\n    \"coordinates\": [-77.047, -11.944],\n    \"direccion\": \"Parque central, Comas\"\n  }\n}"
+        },
+        "url": "{{baseUrl}}/eventos-limpieza"
+      }
+    },
+    {
+      "name": "Canjes - crear",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": \"{{usuarioId}}\",\n  \"recompensaId\": \"{{recompensaId}}\"\n}"
+        },
+        "url": "{{baseUrl}}/canjes"
+      }
+    }
+  ]
+}
